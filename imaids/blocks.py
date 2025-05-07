@@ -524,7 +524,7 @@ class Block(_fieldsource.FieldModel):
             subblock_list = []
             for div in self._subdivision:
                 # There will be only one _subdivision elements in this case.
-                subblock = _rad.ObjCylMag([0,0,self._longitudinal_position],
+                subblock = _rad.ObjCylMag([0, 0, self._longitudinal_position],
                                             self._shape, self._length,
                                             self._cylinder_nseg, 'y',
                                             self._magnetization)

@@ -1862,7 +1862,8 @@ class HybridAPU(APU):
                 'hybrid_pole')
 
         if pole_material == 'default':
-            pole_material = _materials.VanadiumPermendur()
+            pole_material = _materials.Material.preset(
+                'VanadiumPermendur').name
 
         if pole_length == 'default':
             pole_length = _utils.hybrid_undulator_pole_length(
@@ -1910,6 +1911,7 @@ class HybridPlanar(Planar):
     def __init__(
             self, block_shape='default',
             nr_periods=10, period_length=19.9, gap=5.2, mr=1.34,
+            block_material='default',
             block_subdivision='default', hybrid=True,
             pole_shape='default', pole_length='default',
             pole_material='default', pole_subdivision='default',
@@ -1979,7 +1981,12 @@ class HybridPlanar(Planar):
                 'hybrid_pole')
 
         if pole_material == 'default':
-            pole_material = _materials.VanadiumPermendur()
+            pole_material = _materials.Material.preset(
+                'VanadiumPermendur').name
+
+        if block_material == 'default':
+            block_material = _materials.Material.preset(
+                'NdFeB').name
 
         if pole_length == 'default':
             pole_length = _utils.hybrid_undulator_pole_length(
@@ -2006,6 +2013,7 @@ class HybridPlanar(Planar):
         super().__init__(
             nr_periods=nr_periods, period_length=period_length,
             gap=gap, mr=mr, block_shape=block_shape,
+            block_material=block_material,
             block_subdivision=block_subdivision,
             rectangular=rectangular,
             longitudinal_distance=longitudinal_distance,
