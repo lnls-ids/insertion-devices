@@ -187,10 +187,10 @@ class Cassette(
 
         if mr is not None:
             if mr < 0:
-                raise ValueError('mr must be >= 0.')
+                raise ValueError("mr must be >= 0.")
+            self._mr = float(mr)
         elif block_material is not None:
-            mr = mat.mr
-        self._mr = float(mr)
+            self._mr = mat.mr
 
         if longitudinal_distance is not None and longitudinal_distance < 0:
             raise ValueError('longitudinal_distance must be >= 0.')
