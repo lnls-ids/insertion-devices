@@ -181,7 +181,6 @@ class Cassette(
             mat = _materials.Material.preset(block_material)
             ksipar = mat.ksipar
             ksiper = mat.ksiper
-            self._block_material = mat
         else:
             mat = _materials.Material(linear=True, ksiper=ksiper,
                                       ksipar=ksipar)
@@ -739,7 +738,7 @@ class Cassette(
                     self._block_shape, length, position, magnetization,
                     subdivision=self._block_subdivision,
                     rectangular=self._rectangular,
-                    material=self._block_material,
+                    ksipar=self._ksipar, ksiper=self._ksiper,
                     draw_color_component=self.draw_color_component)
             self._blocks.append(block)
 
