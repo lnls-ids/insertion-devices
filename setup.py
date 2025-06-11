@@ -1,12 +1,13 @@
 """Setup module."""
 
+import pathlib
+
 from setuptools import setup
-import pkg_resources
 
 
 def get_abs_path(relative):
-    """Get absolute path of file."""
-    return pkg_resources.resource_filename(__name__, relative)
+    """."""
+    return str(pathlib.Path(__file__).parent / relative)
 
 
 with open(get_abs_path("README.md"), "r") as _f:
