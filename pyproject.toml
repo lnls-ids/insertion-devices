@@ -6,8 +6,9 @@ build-backend = "setuptools.build_meta"
 name = "imaids"
 authors = [{ name = "lnls-ima" } ]
 maintainers = [
-  {name = "Gabriel Rezende de Ascenção", email = "gabriel.ascencao@lnls.br"},
-  {name = "Lucas Francisco"},
+  {name = "Gabriel Rezende da Ascenção", email = "gabriel.ascencao@lnls.br"},
+  {name = "Jefferson Barros Vieira", email = "jefferson.vieira@lnls.br"},
+  {name = "Sergio Augusto Lordano Luiz", email = "sergio.lordano@lnls.br"},
 ]
 description = "Insertion Devices Package"
 readme = "README.md"
@@ -24,10 +25,10 @@ license = "MIT"
 license-files= [ "LICENSE", ]
 
 [project.urls]
-Homepage = "https://github.com/lnls-ima/insertion-devices"
-Download = "https://github.com/lnls-ima/insertion-devices"
-Repository = "https://github.com/lnls-ima/insertion-devices.git"
-Issues = "https://github.com/lnls-ima/insertion-devices/issues"
+Homepage = "https://github.com/lnls-ids/insertion-devices"
+Download = "https://github.com/lnls-ids/insertion-devices"
+Repository = "https://github.com/lnls-ids/insertion-devices.git"
+Issues = "https://github.com/lnls-ids/insertion-devices/issues"
 
 [project.optional-dependencies]
 tests = ["nose"]
