@@ -4,7 +4,9 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "imaids"
-authors = [{ name = "lnls-ima" } ]
+authors = [{ name = "lnls-ima" },
+           { name = "lnls-ids" } 
+          ]
 maintainers = [
   {name = "Gabriel Rezende da Ascenção", email = "gabriel.ascencao@lnls.br"},
   {name = "Jefferson Barros Vieira", email = "jefferson.vieira@lnls.br"},
