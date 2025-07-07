@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=60"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "imaids"
+authors = [{ name = "lnls-ima" },
+           { name = "lnls-ids" } 
+          ]
+maintainers = [
+  {name = "Gabriel Rezende da Ascenção", email = "gabriel.ascencao@lnls.br"},
+  {name = "Jefferson Barros Vieira", email = "jefferson.vieira@lnls.br"},
+  {name = "Sergio Augusto Lordano Luiz", email = "sergio.lordano@lnls.br"},
+]
+description = "Insertion Devices Package"
+readme = "README.md"
+dynamic = ["version", "dependencies"]
+requires-python = ">=3.9"
+classifiers = [
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python",
+    "Topic :: Scientific/Engineering",
+]
+keywords = ["SIRIUS", "python", "Accelerator Physics", "Insertion Devices"]
+
+license = "MIT"
+license-files= [ "LICENSE", ]
+
+[project.urls]
+Homepage = "https://github.com/lnls-ids/insertion-devices"
+Download = "https://github.com/lnls-ids/insertion-devices"
+Repository = "https://github.com/lnls-ids/insertion-devices.git"
+Issues = "https://github.com/lnls-ids/insertion-devices/issues"
+
+[project.optional-dependencies]
+tests = ["nose"]
+
+# --- Setuptools specific configurations ---
+[tool.setuptools]
+packages = ["imaids"]
+include-package-data = true
+
+[tool.setuptools.dynamic]
+version = { file = "VERSION" }
+dependencies = { file = "requirements.txt" }
+
+[tool.setuptools.package-data]
+imaids = ["VERSION", "presets/*"]
