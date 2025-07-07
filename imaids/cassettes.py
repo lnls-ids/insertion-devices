@@ -7,6 +7,7 @@ import radia as _rad
 from . import utils as _utils
 from . import blocks as _blocks
 from . import fieldsource as _fieldsource
+from . import materials as _materials
 
 
 class Cassette(
@@ -41,6 +42,7 @@ class Cassette(
             mr=1.37, upper_cassette=False, longitudinal_distance=0,
             block_subdivision=None, rectangular=False,
             ksipar=0.06, ksiper=0.17, hybrid=False,
+            block_material=None,
             pole_shape=None, pole_length=None, pole_material=None,
             pole_subdivision=None,
             start_blocks_length=None, start_blocks_distance=None,
@@ -174,10 +176,21 @@ class Cassette(
         """
         _fieldsource.SinusoidalFieldSource.__init__(
             self, nr_periods=nr_periods, period_length=period_length)
+        
+        if block_material is not None:
+            mat = _materials.Material.preset(block_material)
+            ksipar = mat.ksipar
+            ksiper = mat.ksiper
+        else:
+            mat = _materials.Material(linear=True, ksiper=ksiper,
+                                      ksipar=ksipar)
 
-        if mr is not None and mr < 0:
-            raise ValueError('mr must be >= 0.')
-        self._mr = float(mr)
+        if mr is not None:
+            if mr < 0:
+                raise ValueError("mr must be >= 0.")
+            self._mr = float(mr)
+        elif block_material is not None:
+            self._mr = mat.mr
 
         if longitudinal_distance is not None and longitudinal_distance < 0:
             raise ValueError('longitudinal_distance must be >= 0.')
@@ -244,7 +257,7 @@ class Cassette(
 
         self._pole_shape = pole_shape
         self._pole_length = pole_length
-        self._pole_material = pole_material
+        self._pole_material = _materials.Material.preset(pole_material)
         self._pole_subdivision = pole_subdivision
 
         self._block_subdivision = block_subdivision

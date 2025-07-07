@@ -143,7 +143,6 @@ class Material():
 
         return cls(**file_kwargs)
 
-
     @classmethod
     def preset(cls, presetname, **kwargs):
         """Create Material object from preset.
@@ -162,12 +161,17 @@ class Material():
                 values read from preset.        
         """
 
-        with _resources.path(__package__, 'presets') as p:
-            presetfile = p / (presetname + '.json')
+        package = __package__ 
+        filename = f'presets/{presetname}.json'
 
-        return cls.load_state(presetfile, **kwargs)
+        with _resources.files(package).joinpath(filename).open('r', encoding=
+                                                               'utf-8') as f:
+            state = _json.load(f)
 
-    
+        state.update(kwargs)
+
+        return cls(**state)
+
     @staticmethod
     def dir_presets():
         """List of available material presets.        
@@ -175,11 +179,10 @@ class Material():
         Returns:
             list: Available .json material presets on repository. 
         """
-        with _resources.path(__package__, 'presets') as p:
-            presets = [f.stem for f in p.glob('*.json')]
-        
-        return presets
+        package = __package__
+        presets_dir = _resources.files(package).joinpath('presets')
 
+        return [f.stem for f in presets_dir.iterdir() if f.suffix == '.json']
 
     def create_radia_object(self):
         """Creates the radia object."""
