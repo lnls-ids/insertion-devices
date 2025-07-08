@@ -518,7 +518,7 @@ class AppleII(_insertiondevice.InsertionDeviceModel):
         self._dcp = 0
         self._dg = 0
         super().__init__(*args, **kwargs)
-
+           
     @property
     def dp(self):
         """Phase displacement in mm."""

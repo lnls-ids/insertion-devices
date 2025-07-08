@@ -257,7 +257,8 @@ class Cassette(
 
         self._pole_shape = pole_shape
         self._pole_length = pole_length
-        self._pole_material = _materials.Material.preset(pole_material)
+        if pole_material is not None:
+            self._pole_material = _materials.Material.preset(pole_material)
         self._pole_subdivision = pole_subdivision
 
         self._block_subdivision = block_subdivision
