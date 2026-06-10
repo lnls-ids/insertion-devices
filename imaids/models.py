@@ -1917,7 +1917,7 @@ class UE44(AppleII):
         gap=11.4,
         mr=1.14,
         block_subdivision='default',
-        rectangular=True,
+        rectangular=False,
         longitudinal_distance=0,
         name='ue44',
         **kwargs,
@@ -1925,6 +1925,9 @@ class UE44(AppleII):
 
         if block_shape == 'default':
             block_shape = _blocks.Block.get_predefined_shape('ue44')
+
+        if block_subdivision == 'default':
+            block_subdivision = _blocks.Block.get_predefined_subdivision('ue44')
 
         l1 = 1.44671233
         l2 = 4.55528286
@@ -1942,11 +1945,15 @@ class UE44(AppleII):
             period_length=period_length,
             gap=gap,
             mr=mr,
+            rectangular=rectangular,
+            block_subdivision=block_subdivision,
             longitudinal_distance=longitudinal_distance,
             start_blocks_distance=start_blocks_distance,
             start_blocks_length=start_blocks_length,
             end_blocks_distance=end_blocks_distance,
             end_blocks_length=end_blocks_length,
+            name=name,
+            **kwargs,
         )
 
         cse_mag = _np.array(self.magnetization_dict['cse'])
