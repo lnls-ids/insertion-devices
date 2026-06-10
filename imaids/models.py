@@ -1909,6 +1909,8 @@ class Kyma58(APU):
 
 
 class UE44(AppleII):
+    """UE44 class undulator."""
+
     def __init__(
         self,
         block_shape='default',
@@ -1922,7 +1924,29 @@ class UE44(AppleII):
         name='ue44',
         **kwargs,
     ):
+        """Create AppleII with same parameters as DeltaSabia model.
 
+        Args:
+            block_shape (str, optional): List of points [x, y] to
+                create blocks shape (in mm). Defaults to 'default'.
+            nr_periods (int, optional): Number of complete periods.
+                Defaults to 75.
+            period_length (float, optional): Period length (in mm).
+                Defaults to 44.
+            gap (float, optional): Insertion device magnetic gap
+                (in mm). Defaults to 11.4.
+            mr (float, optional): Remanent magnetization (in T).
+                Defaults to 1.14.
+            block_subdivision (str or list, optional): List specifying
+                the number of subdivisions of each subblock in the cartesian
+                directions [x, y, z]. Defaults to 'default'.
+            rectangular (bool, optional): If True, create model with
+                rectangular blocks. Defaults to False.
+            longitudinal_distance (float, optional): Longitunal
+                distance between blocks (in mm). Defaults to 0.
+            name (str, optional): Insertion device name.
+                Defaults to 'ue44'.
+        """
         if block_shape == 'default':
             block_shape = _blocks.Block.get_predefined_shape('ue44')
 
