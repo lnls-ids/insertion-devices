@@ -1,4 +1,3 @@
-
 import time as _time
 import numpy as _np
 import radia as _rad
@@ -58,10 +57,11 @@ class Delta(_insertiondevice.InsertionDeviceModel):
         self.set_cassete_positions(dgh=value)
 
     def create_radia_object(
-            self,
-            block_names_dict=None,
-            magnetization_dict=None,
-            position_err_dict=None):
+        self,
+        block_names_dict=None,
+        magnetization_dict=None,
+        position_err_dict=None,
+    ):
         """Create Delta model radia object.
 
         Args:
@@ -85,77 +85,98 @@ class Delta(_insertiondevice.InsertionDeviceModel):
 
         name = 'cse'
         cse = _cassettes.Cassette(
-            upper_cassette=False, name=name,
-            nr_periods=self.nr_periods, period_length=self.period_length,
-            init_radia_object=False, **self.cassette_properties)
+            upper_cassette=False,
+            name=name,
+            nr_periods=self.nr_periods,
+            period_length=self.period_length,
+            init_radia_object=False,
+            **self.cassette_properties,
+        )
         cse.create_radia_object(
             block_names=block_names_dict.get(name),
             magnetization_list=magnetization_dict.get(name),
-            position_err=position_err_dict.get(name))
+            position_err=position_err_dict.get(name),
+        )
         if self.trf_on_blocks:
             for block in cse.blocks:
-                block.shift([0, -self._gap/2, 0])
+                block.shift([0, -self._gap / 2, 0])
                 block.rotate([0, 0, 0], [0, 0, 1], _np.pi)
         else:
-            cse.shift([0, -self._gap/2, 0])
+            cse.shift([0, -self._gap / 2, 0])
             cse.rotate([0, 0, 0], [0, 0, 1], _np.pi)
         self._cassettes[name] = cse
 
         name = 'csd'
         csd = _cassettes.Cassette(
-            upper_cassette=False, name=name,
-            nr_periods=self.nr_periods, period_length=self.period_length,
-            init_radia_object=False, **self.cassette_properties)
+            upper_cassette=False,
+            name=name,
+            nr_periods=self.nr_periods,
+            period_length=self.period_length,
+            init_radia_object=False,
+            **self.cassette_properties,
+        )
         csd.create_radia_object(
             block_names=block_names_dict.get(name),
             magnetization_list=magnetization_dict.get(name),
-            position_err=position_err_dict.get(name))
+            position_err=position_err_dict.get(name),
+        )
         if self.trf_on_blocks:
             for block in csd.blocks:
-                block.shift([0, -self._gap/2, 0])
-                block.rotate([0, 0, 0], [0, 0, 1], -_np.pi/2)
+                block.shift([0, -self._gap / 2, 0])
+                block.rotate([0, 0, 0], [0, 0, 1], -_np.pi / 2)
         else:
-            csd.shift([0, -self._gap/2, 0])
-            csd.rotate([0, 0, 0], [0, 0, 1], -_np.pi/2)
+            csd.shift([0, -self._gap / 2, 0])
+            csd.rotate([0, 0, 0], [0, 0, 1], -_np.pi / 2)
         self._cassettes[name] = csd
 
         name = 'cie'
         cie = _cassettes.Cassette(
-            upper_cassette=False, name=name,
-            nr_periods=self.nr_periods, period_length=self.period_length,
-            init_radia_object=False, **self.cassette_properties)
+            upper_cassette=False,
+            name=name,
+            nr_periods=self.nr_periods,
+            period_length=self.period_length,
+            init_radia_object=False,
+            **self.cassette_properties,
+        )
         cie.create_radia_object(
             block_names=block_names_dict.get(name),
             magnetization_list=magnetization_dict.get(name),
-            position_err=position_err_dict.get(name))
+            position_err=position_err_dict.get(name),
+        )
         if self.trf_on_blocks:
             for block in cie.blocks:
-                block.shift([0, -self._gap/2, 0])
-                block.rotate([0, 0, 0], [0, 0, 1], _np.pi/2)
+                block.shift([0, -self._gap / 2, 0])
+                block.rotate([0, 0, 0], [0, 0, 1], _np.pi / 2)
         else:
-            cie.shift([0, -self._gap/2, 0])
-            cie.rotate([0, 0, 0], [0, 0, 1], _np.pi/2)
+            cie.shift([0, -self._gap / 2, 0])
+            cie.rotate([0, 0, 0], [0, 0, 1], _np.pi / 2)
         self._cassettes[name] = cie
 
         name = 'cid'
         cid = _cassettes.Cassette(
-            upper_cassette=False, name=name,
-            nr_periods=self.nr_periods, period_length=self.period_length,
-            init_radia_object=False, **self.cassette_properties)
+            upper_cassette=False,
+            name=name,
+            nr_periods=self.nr_periods,
+            period_length=self.period_length,
+            init_radia_object=False,
+            **self.cassette_properties,
+        )
         cid.create_radia_object(
             block_names=block_names_dict.get(name),
             magnetization_list=magnetization_dict.get(name),
-            position_err=position_err_dict.get(name))
+            position_err=position_err_dict.get(name),
+        )
         if self.trf_on_blocks:
             for block in cid.blocks:
-                block.shift([0, -self._gap/2, 0])
+                block.shift([0, -self._gap / 2, 0])
         else:
-            cid.shift([0, -self._gap/2, 0])
+            cid.shift([0, -self._gap / 2, 0])
         self._cassettes[name] = cid
 
         self._radia_object = _rad.ObjCnt(
-            [c.radia_object for c in [csd, cse, cid, cie]])
-        self.rotate([0, 0, 0], [0, 0, 1], -_np.pi/4)
+            [c.radia_object for c in [csd, cse, cid, cie]]
+        )
+        self.rotate([0, 0, 0], [0, 0, 1], -_np.pi / 4)
 
     def set_cassete_positions(self, dp=None, dcp=None, dgv=None, dgh=None):
         """Change longitudinal cassette positions to adjust
@@ -192,17 +213,18 @@ class Delta(_insertiondevice.InsertionDeviceModel):
         cie = self._cassettes['cie']
 
         csd_z = _np.array(_rad.ObjM(csd.radia_object))[:, 0, 2]
-        csd_shift = - (_np.max(csd_z) + _np.min(csd_z))/2 + dgv
+        csd_shift = -(_np.max(csd_z) + _np.min(csd_z)) / 2 + dgv
 
         cse_z = _np.array(_rad.ObjM(cse.radia_object))[:, 0, 2]
-        cse_shift = - (
-            _np.max(cse_z) + _np.min(cse_z))/2 + dgv + dgh + dp + dcp
+        cse_shift = (
+            -(_np.max(cse_z) + _np.min(cse_z)) / 2 + dgv + dgh + dp + dcp
+        )
 
         cid_z = _np.array(_rad.ObjM(cid.radia_object))[:, 0, 2]
-        cid_shift = - (_np.max(cid_z) + _np.min(cid_z))/2 + dp - dcp
+        cid_shift = -(_np.max(cid_z) + _np.min(cid_z)) / 2 + dp - dcp
 
         cie_z = _np.array(_rad.ObjM(cie.radia_object))[:, 0, 2]
-        cie_shift = - (_np.max(cie_z) + _np.min(cie_z))/2 + dgh
+        cie_shift = -(_np.max(cie_z) + _np.min(cie_z)) / 2 + dgh
 
         csd.shift([0, 0, csd_shift])
         cse.shift([0, 0, cse_shift])
@@ -215,8 +237,7 @@ class Delta(_insertiondevice.InsertionDeviceModel):
         self._dgh = dgh
         return True
 
-    def get_fieldmap_header(
-            self, kh, kv, field_phase, polarization_name):
+    def get_fieldmap_header(self, kh, kv, field_phase, polarization_name):
         """Get fieldmap header to save in file.
 
         Args:
@@ -244,7 +265,7 @@ class Delta(_insertiondevice.InsertionDeviceModel):
         pos_cie = self.dgh
         pos_cid = self.dp - self.dcp
 
-        k = (kh**2 + kv**2)**(1/2)
+        k = (kh**2 + kv**2) ** (1 / 2)
 
         header = []
         header.append('timestamp:\t{0:s}\n'.format(timestamp))
@@ -308,10 +329,11 @@ class AppleX(_insertiondevice.InsertionDeviceModel):
         self.set_cassete_positions(dg=value)
 
     def create_radia_object(
-            self,
-            block_names_dict=None,
-            magnetization_dict=None,
-            position_err_dict=None):
+        self,
+        block_names_dict=None,
+        magnetization_dict=None,
+        position_err_dict=None,
+    ):
         """Create AppleX radia object.
 
         Args:
@@ -335,77 +357,98 @@ class AppleX(_insertiondevice.InsertionDeviceModel):
 
         name = 'cse'
         cse = _cassettes.Cassette(
-            upper_cassette=True, name=name,
-            nr_periods=self.nr_periods, period_length=self.period_length,
-            init_radia_object=False, **self.cassette_properties)
+            upper_cassette=True,
+            name=name,
+            nr_periods=self.nr_periods,
+            period_length=self.period_length,
+            init_radia_object=False,
+            **self.cassette_properties,
+        )
         cse.create_radia_object(
             block_names=block_names_dict.get(name),
             magnetization_list=magnetization_dict.get(name),
-            position_err=position_err_dict.get(name))
+            position_err=position_err_dict.get(name),
+        )
         if self.trf_on_blocks:
             for block in cse.blocks:
-                block.shift([0, -self._gap/2, 0])
+                block.shift([0, -self._gap / 2, 0])
                 block.rotate([0, 0, 0], [0, 0, 1], _np.pi)
         else:
-            cse.shift([0, -self._gap/2, 0])
+            cse.shift([0, -self._gap / 2, 0])
             cse.rotate([0, 0, 0], [0, 0, 1], _np.pi)
         self._cassettes[name] = cse
 
         name = 'csd'
         csd = _cassettes.Cassette(
-            upper_cassette=True, name=name,
-            nr_periods=self.nr_periods, period_length=self.period_length,
-            init_radia_object=False, **self.cassette_properties)
+            upper_cassette=True,
+            name=name,
+            nr_periods=self.nr_periods,
+            period_length=self.period_length,
+            init_radia_object=False,
+            **self.cassette_properties,
+        )
         csd.create_radia_object(
             block_names=block_names_dict.get(name),
             magnetization_list=magnetization_dict.get(name),
-            position_err=position_err_dict.get(name))
+            position_err=position_err_dict.get(name),
+        )
         if self.trf_on_blocks:
             for block in csd.blocks:
-                block.shift([0, -self._gap/2, 0])
-                block.rotate([0, 0, 0], [0, 0, 1], -_np.pi/2)
+                block.shift([0, -self._gap / 2, 0])
+                block.rotate([0, 0, 0], [0, 0, 1], -_np.pi / 2)
         else:
-            csd.shift([0, -self._gap/2, 0])
-            csd.rotate([0, 0, 0], [0, 0, 1], -_np.pi/2)
+            csd.shift([0, -self._gap / 2, 0])
+            csd.rotate([0, 0, 0], [0, 0, 1], -_np.pi / 2)
         self._cassettes[name] = csd
 
         name = 'cie'
         cie = _cassettes.Cassette(
-            upper_cassette=False, name=name,
-            nr_periods=self.nr_periods, period_length=self.period_length,
-            init_radia_object=False, **self.cassette_properties)
+            upper_cassette=False,
+            name=name,
+            nr_periods=self.nr_periods,
+            period_length=self.period_length,
+            init_radia_object=False,
+            **self.cassette_properties,
+        )
         cie.create_radia_object(
             block_names=block_names_dict.get(name),
             magnetization_list=magnetization_dict.get(name),
-            position_err=position_err_dict.get(name))
+            position_err=position_err_dict.get(name),
+        )
         if self.trf_on_blocks:
             for block in cie.blocks:
-                block.shift([0, -self._gap/2, 0])
-                block.rotate([0, 0, 0], [0, 0, 1], _np.pi/2)
+                block.shift([0, -self._gap / 2, 0])
+                block.rotate([0, 0, 0], [0, 0, 1], _np.pi / 2)
         else:
-            cie.shift([0, -self._gap/2, 0])
-            cie.rotate([0, 0, 0], [0, 0, 1], _np.pi/2)
+            cie.shift([0, -self._gap / 2, 0])
+            cie.rotate([0, 0, 0], [0, 0, 1], _np.pi / 2)
         self._cassettes[name] = cie
 
         name = 'cid'
         cid = _cassettes.Cassette(
-            upper_cassette=False, name=name,
-            nr_periods=self.nr_periods, period_length=self.period_length,
-            init_radia_object=False, **self.cassette_properties)
+            upper_cassette=False,
+            name=name,
+            nr_periods=self.nr_periods,
+            period_length=self.period_length,
+            init_radia_object=False,
+            **self.cassette_properties,
+        )
         cid.create_radia_object(
             block_names=block_names_dict.get(name),
             magnetization_list=magnetization_dict.get(name),
-            position_err=position_err_dict.get(name))
+            position_err=position_err_dict.get(name),
+        )
         if self.trf_on_blocks:
             for block in cid.blocks:
-                block.shift([0, -self._gap/2, 0])
+                block.shift([0, -self._gap / 2, 0])
         else:
-            cid.shift([0, -self._gap/2, 0])
+            cid.shift([0, -self._gap / 2, 0])
         self._cassettes[name] = cid
 
         self._radia_object = _rad.ObjCnt(
-            [c.radia_object for c in [csd, cse, cid, cie]])
-        self.rotate([0, 0, 0], [0, 0, 1], -_np.pi/4)
+            [c.radia_object for c in [csd, cse, cid, cie]]
+        )
+        self.rotate([0, 0, 0], [0, 0, 1], -_np.pi / 4)
 
     def set_cassete_positions(self, dp=None, dcp=None, dg=None):
         """Change longitudinal cassette positions to adjust
@@ -445,18 +488,17 @@ class AppleX(_insertiondevice.InsertionDeviceModel):
         cid_shift = diff_dp - diff_dcp
         cie_shift = 0
 
-        csd.shift([0, diff_dg/2, csd_shift])
-        cse.shift([-diff_dg/2, 0, cse_shift])
-        cid.shift([diff_dg/2, 0, cid_shift])
-        cie.shift([0, -diff_dg/2, cie_shift])
+        csd.shift([0, diff_dg / 2, csd_shift])
+        cse.shift([-diff_dg / 2, 0, cse_shift])
+        cid.shift([diff_dg / 2, 0, cid_shift])
+        cie.shift([0, -diff_dg / 2, cie_shift])
 
         self._dp = dp
         self._dcp = dcp
         self._dg = dg
         return True
 
-    def get_fieldmap_header(
-            self, kh, kv, field_phase, polarization_name):
+    def get_fieldmap_header(self, kh, kv, field_phase, polarization_name):
         """Get fieldmap header to save in file.
 
         Args:
@@ -484,7 +526,7 @@ class AppleX(_insertiondevice.InsertionDeviceModel):
         pos_cie = 0
         pos_cid = self.dp - self.dcp
 
-        k = (kh**2 + kv**2)**(1/2)
+        k = (kh**2 + kv**2) ** (1 / 2)
 
         header = []
         header.append('timestamp:\t{0:s}\n'.format(timestamp))
@@ -518,7 +560,7 @@ class AppleII(_insertiondevice.InsertionDeviceModel):
         self._dcp = 0
         self._dg = 0
         super().__init__(*args, **kwargs)
-           
+
     @property
     def dp(self):
         """Phase displacement in mm."""
@@ -547,10 +589,11 @@ class AppleII(_insertiondevice.InsertionDeviceModel):
         self.set_cassete_positions(dg=value)
 
     def create_radia_object(
-            self,
-            block_names_dict=None,
-            magnetization_dict=None,
-            position_err_dict=None):
+        self,
+        block_names_dict=None,
+        magnetization_dict=None,
+        position_err_dict=None,
+    ):
         """Create AppleII radia object.
 
         Args:
@@ -574,78 +617,99 @@ class AppleII(_insertiondevice.InsertionDeviceModel):
 
         name = 'cse'
         cse = _cassettes.Cassette(
-            upper_cassette=True, name=name,
-            nr_periods=self.nr_periods, period_length=self.period_length,
-            init_radia_object=False, **self.cassette_properties)
+            upper_cassette=True,
+            name=name,
+            nr_periods=self.nr_periods,
+            period_length=self.period_length,
+            init_radia_object=False,
+            **self.cassette_properties,
+        )
         cse.create_radia_object(
             block_names=block_names_dict.get(name),
             magnetization_list=magnetization_dict.get(name),
-            position_err=position_err_dict.get(name))
+            position_err=position_err_dict.get(name),
+        )
         if self.trf_on_blocks:
             for block in cse.blocks:
-                block.shift([0, -self._gap/2, self.dp + self.dcp])
+                block.shift([0, -self._gap / 2, self.dp + self.dcp])
                 block.mirror([0, 0, 0], [1, 0, 0])
                 block.rotate([0, 0, 0], [0, 0, 1], _np.pi)
         else:
-            cse.shift([0, -self._gap/2, self.dp + self.dcp])
+            cse.shift([0, -self._gap / 2, self.dp + self.dcp])
             cse.mirror([0, 0, 0], [1, 0, 0])
             cse.rotate([0, 0, 0], [0, 0, 1], _np.pi)
         self._cassettes[name] = cse
 
         name = 'csd'
         csd = _cassettes.Cassette(
-            upper_cassette=True, name=name,
-            nr_periods=self.nr_periods, period_length=self.period_length,
-            init_radia_object=False, **self.cassette_properties)
+            upper_cassette=True,
+            name=name,
+            nr_periods=self.nr_periods,
+            period_length=self.period_length,
+            init_radia_object=False,
+            **self.cassette_properties,
+        )
         csd.create_radia_object(
             block_names=block_names_dict.get(name),
             magnetization_list=magnetization_dict.get(name),
-            position_err=position_err_dict.get(name))
+            position_err=position_err_dict.get(name),
+        )
         if self.trf_on_blocks:
             for block in csd.blocks:
-                block.shift([0, -self._gap/2, 0])
+                block.shift([0, -self._gap / 2, 0])
                 block.rotate([0, 0, 0], [0, 0, 1], _np.pi)
         else:
-            csd.shift([0, -self._gap/2, 0])
+            csd.shift([0, -self._gap / 2, 0])
             csd.rotate([0, 0, 0], [0, 0, 1], _np.pi)
         self._cassettes[name] = csd
 
         name = 'cie'
         cie = _cassettes.Cassette(
-            upper_cassette=False, name=name,
-            nr_periods=self.nr_periods, period_length=self.period_length,
-            init_radia_object=False, **self.cassette_properties)
+            upper_cassette=False,
+            name=name,
+            nr_periods=self.nr_periods,
+            period_length=self.period_length,
+            init_radia_object=False,
+            **self.cassette_properties,
+        )
         cie.create_radia_object(
             block_names=block_names_dict.get(name),
             magnetization_list=magnetization_dict.get(name),
-            position_err=position_err_dict.get(name))
+            position_err=position_err_dict.get(name),
+        )
         if self.trf_on_blocks:
             for block in cie.blocks:
-                block.shift([0, -self._gap/2, 0])
+                block.shift([0, -self._gap / 2, 0])
         else:
-            cie.shift([0, -self._gap/2, 0])
+            cie.shift([0, -self._gap / 2, 0])
         self._cassettes[name] = cie
 
         name = 'cid'
         cid = _cassettes.Cassette(
-            upper_cassette=False, name=name,
-            nr_periods=self.nr_periods, period_length=self.period_length,
-            init_radia_object=False, **self.cassette_properties)
+            upper_cassette=False,
+            name=name,
+            nr_periods=self.nr_periods,
+            period_length=self.period_length,
+            init_radia_object=False,
+            **self.cassette_properties,
+        )
         cid.create_radia_object(
             block_names=block_names_dict.get(name),
             magnetization_list=magnetization_dict.get(name),
-            position_err=position_err_dict.get(name))
+            position_err=position_err_dict.get(name),
+        )
         if self.trf_on_blocks:
             for block in cid.blocks:
-                block.shift([0, -self._gap/2, self.dp - self.dcp])
+                block.shift([0, -self._gap / 2, self.dp - self.dcp])
                 block.mirror([0, 0, 0], [1, 0, 0])
         else:
-            cid.shift([0, -self._gap/2, self.dp - self.dcp])
+            cid.shift([0, -self._gap / 2, self.dp - self.dcp])
             cid.mirror([0, 0, 0], [1, 0, 0])
         self._cassettes[name] = cid
 
         self._radia_object = _rad.ObjCnt(
-            [c.radia_object for c in [csd, cse, cid, cie]])
+            [c.radia_object for c in [csd, cse, cid, cie]]
+        )
 
     def set_cassete_positions(self, dp=None, dcp=None, dg=None):
         """Change longitudinal cassette positions and gap.
@@ -683,10 +747,10 @@ class AppleII(_insertiondevice.InsertionDeviceModel):
         cid_shift = diff_dp - diff_dcp
         cie_shift = 0
 
-        csd.shift([0, diff_dg/2, csd_shift])
-        cse.shift([0, diff_dg/2, cse_shift])
-        cid.shift([0, -diff_dg/2, cid_shift])
-        cie.shift([0, -diff_dg/2, cie_shift])
+        csd.shift([0, diff_dg / 2, csd_shift])
+        cse.shift([0, diff_dg / 2, cse_shift])
+        cid.shift([0, -diff_dg / 2, cid_shift])
+        cie.shift([0, -diff_dg / 2, cie_shift])
 
         self._dp = dp
         self._dcp = dcp
@@ -697,8 +761,9 @@ class AppleII(_insertiondevice.InsertionDeviceModel):
 class APU(_insertiondevice.InsertionDeviceModel):
     """Adjustable phase undulador model."""
 
-    def __init__(self, cs_block_shape=None,
-                       ci_block_shape=None, *args, **kwargs):
+    def __init__(
+        self, cs_block_shape=None, ci_block_shape=None, *args, **kwargs
+    ):
         """Create radia model."""
         self._dg = 0
         self._cs_block_shape = cs_block_shape
@@ -725,10 +790,11 @@ class APU(_insertiondevice.InsertionDeviceModel):
         self.set_cassete_positions(dg=value)
 
     def create_radia_object(
-            self,
-            block_names_dict=None,
-            magnetization_dict=None,
-            position_err_dict=None):
+        self,
+        block_names_dict=None,
+        magnetization_dict=None,
+        position_err_dict=None,
+    ):
         """Create APU radia model.
 
         Args:
@@ -757,19 +823,24 @@ class APU(_insertiondevice.InsertionDeviceModel):
         else:
             self.cs_cassette_properties = self.cassette_properties
         cs = _cassettes.Cassette(
-            upper_cassette=True, name=name,
-            nr_periods=self.nr_periods, period_length=self.period_length,
-            init_radia_object=False, **self.cs_cassette_properties)
+            upper_cassette=True,
+            name=name,
+            nr_periods=self.nr_periods,
+            period_length=self.period_length,
+            init_radia_object=False,
+            **self.cs_cassette_properties,
+        )
         cs.create_radia_object(
             block_names=block_names_dict.get(name),
             magnetization_list=magnetization_dict.get(name),
-            position_err=position_err_dict.get(name))
+            position_err=position_err_dict.get(name),
+        )
         if self.trf_on_blocks:
             for block in cs.blocks:
-                block.shift([0, -self._gap/2, 0])
+                block.shift([0, -self._gap / 2, 0])
                 block.rotate([0, 0, 0], [0, 0, 1], _np.pi)
         else:
-            cs.shift([0, -self._gap/2, 0])
+            cs.shift([0, -self._gap / 2, 0])
             cs.rotate([0, 0, 0], [0, 0, 1], _np.pi)
         self._cassettes[name] = cs
 
@@ -780,22 +851,26 @@ class APU(_insertiondevice.InsertionDeviceModel):
         else:
             self.ci_cassette_properties = self.cassette_properties
         ci = _cassettes.Cassette(
-            upper_cassette=False, name=name,
-            nr_periods=self.nr_periods, period_length=self.period_length,
-            init_radia_object=False, **self.ci_cassette_properties)
+            upper_cassette=False,
+            name=name,
+            nr_periods=self.nr_periods,
+            period_length=self.period_length,
+            init_radia_object=False,
+            **self.ci_cassette_properties,
+        )
         ci.create_radia_object(
             block_names=block_names_dict.get(name),
             magnetization_list=magnetization_dict.get(name),
-            position_err=position_err_dict.get(name))
+            position_err=position_err_dict.get(name),
+        )
         if self.trf_on_blocks:
             for block in ci.blocks:
-                block.shift([0, -self._gap/2, 0])
+                block.shift([0, -self._gap / 2, 0])
         else:
-            ci.shift([0, -self._gap/2, 0])
+            ci.shift([0, -self._gap / 2, 0])
         self._cassettes[name] = ci
 
-        self._radia_object = _rad.ObjCnt(
-            [c.radia_object for c in [cs, ci]])
+        self._radia_object = _rad.ObjCnt([c.radia_object for c in [cs, ci]])
 
     def set_cassete_positions(self, dg=None):
         """Change longitudinal cassette position.
@@ -837,11 +912,12 @@ class Planar(_insertiondevice.InsertionDeviceModel):
         self.set_cassete_positions(dg=value)
 
     def create_radia_object(
-            self,
-            block_names_dict=None,
-            magnetization_dict=None,
-            position_err_dict=None,
-            is_pole_list=None):
+        self,
+        block_names_dict=None,
+        magnetization_dict=None,
+        position_err_dict=None,
+        is_pole_list=None,
+    ):
         """Create Planar radia model.
 
         Args:
@@ -865,42 +941,51 @@ class Planar(_insertiondevice.InsertionDeviceModel):
 
         name = 'cs'
         cs = _cassettes.Cassette(
-            upper_cassette=True, name=name,
-            nr_periods=self.nr_periods, period_length=self.period_length,
-            init_radia_object=False, **self.cassette_properties)
+            upper_cassette=True,
+            name=name,
+            nr_periods=self.nr_periods,
+            period_length=self.period_length,
+            init_radia_object=False,
+            **self.cassette_properties,
+        )
         cs.create_radia_object(
             block_names=block_names_dict.get(name),
             magnetization_list=magnetization_dict.get(name),
             position_err=position_err_dict.get(name),
-            is_pole_list=is_pole_list)
+            is_pole_list=is_pole_list,
+        )
         if self.trf_on_blocks:
             for block in cs.blocks:
-                block.shift([0, -self._gap/2, 0])
+                block.shift([0, -self._gap / 2, 0])
                 block.rotate([0, 0, 0], [0, 0, 1], _np.pi)
         else:
-            cs.shift([0, -self._gap/2, 0])
+            cs.shift([0, -self._gap / 2, 0])
             cs.rotate([0, 0, 0], [0, 0, 1], _np.pi)
         self._cassettes[name] = cs
 
         name = 'ci'
         ci = _cassettes.Cassette(
-            upper_cassette=False, name=name,
-            nr_periods=self.nr_periods, period_length=self.period_length,
-            init_radia_object=False, **self.cassette_properties)
+            upper_cassette=False,
+            name=name,
+            nr_periods=self.nr_periods,
+            period_length=self.period_length,
+            init_radia_object=False,
+            **self.cassette_properties,
+        )
         ci.create_radia_object(
             block_names=block_names_dict.get(name),
             magnetization_list=magnetization_dict.get(name),
             position_err=position_err_dict.get(name),
-            is_pole_list=is_pole_list)
+            is_pole_list=is_pole_list,
+        )
         if self.trf_on_blocks:
             for block in ci.blocks:
-                block.shift([0, -self._gap/2, 0])
+                block.shift([0, -self._gap / 2, 0])
         else:
-            ci.shift([0, -self._gap/2, 0])
+            ci.shift([0, -self._gap / 2, 0])
         self._cassettes[name] = ci
 
-        self._radia_object = _rad.ObjCnt(
-            [c.radia_object for c in [cs, ci]])
+        self._radia_object = _rad.ObjCnt([c.radia_object for c in [cs, ci]])
 
     def set_cassete_positions(self, dg=None):
         """Change longitudinal cassette position.
@@ -918,10 +1003,10 @@ class Planar(_insertiondevice.InsertionDeviceModel):
         diff_dg = dg - self._dg
 
         cs = self._cassettes['cs']
-        cs.shift([0, diff_dg/2, 0])
+        cs.shift([0, diff_dg / 2, 0])
 
         ci = self._cassettes['ci']
-        ci.shift([0, -diff_dg/2, 0])
+        ci.shift([0, -diff_dg / 2, 0])
 
         self._dg = dg
         return True
@@ -931,13 +1016,22 @@ class DeltaPrototype(Delta):
     """Delta Prototype model."""
 
     def __init__(
-            self, block_shape='default',
-            nr_periods=60, period_length=20, gap=7, mr=1.36,
-            block_subdivision='default',
-            rectangular=False, longitudinal_distance=0,
-            start_blocks_length='default', start_blocks_distance='default',
-            end_blocks_length='default', end_blocks_distance='default',
-            name='delta_prototype', **kwargs):
+        self,
+        block_shape='default',
+        nr_periods=60,
+        period_length=20,
+        gap=7,
+        mr=1.36,
+        block_subdivision='default',
+        rectangular=False,
+        longitudinal_distance=0,
+        start_blocks_length='default',
+        start_blocks_distance='default',
+        end_blocks_length='default',
+        end_blocks_distance='default',
+        name='delta_prototype',
+        **kwargs,
+    ):
         """Create Delta Prototype model.
 
         Args:
@@ -971,14 +1065,13 @@ class DeltaPrototype(Delta):
             name (str, optional): Insertion device name.
                 Defaults to 'delta_prototype'.
         """
-
         if block_shape == 'default':
-            block_shape = _blocks.Block.get_predefined_shape(
-                'delta_prototype')
+            block_shape = _blocks.Block.get_predefined_shape('delta_prototype')
 
         if block_subdivision == 'default':
             block_subdivision = _blocks.Block.get_predefined_subdivision(
-                'delta_prototype')
+                'delta_prototype'
+            )
 
         if start_blocks_length == 'default':
             start_blocks_length = None
@@ -993,8 +1086,11 @@ class DeltaPrototype(Delta):
             end_blocks_distance = None
 
         super().__init__(
-            nr_periods=nr_periods, period_length=period_length,
-            gap=gap, mr=mr, block_shape=block_shape,
+            nr_periods=nr_periods,
+            period_length=period_length,
+            gap=gap,
+            mr=mr,
+            block_shape=block_shape,
             block_subdivision=block_subdivision,
             rectangular=rectangular,
             longitudinal_distance=longitudinal_distance,
@@ -1002,21 +1098,31 @@ class DeltaPrototype(Delta):
             start_blocks_distance=start_blocks_distance,
             end_blocks_length=end_blocks_length,
             end_blocks_distance=end_blocks_distance,
-            name=name, **kwargs)
+            name=name,
+            **kwargs,
+        )
 
 
 class DeltaSabia(Delta):
     """Delta for Sirius Sabia beamline."""
 
     def __init__(
-            self,
-            block_shape='default', nr_periods=21,
-            period_length=52.5, gap=13.6, mr=1.39,
-            block_subdivision='default',
-            rectangular=False, longitudinal_distance=0.125,
-            start_blocks_length='default', start_blocks_distance='default',
-            end_blocks_length='default', end_blocks_distance='default',
-            name='delta_sabia', **kwargs):
+        self,
+        block_shape='default',
+        nr_periods=21,
+        period_length=52.5,
+        gap=13.6,
+        mr=1.39,
+        block_subdivision='default',
+        rectangular=False,
+        longitudinal_distance=0.125,
+        start_blocks_length='default',
+        start_blocks_distance='default',
+        end_blocks_length='default',
+        end_blocks_distance='default',
+        name='delta_sabia',
+        **kwargs,
+    ):
         """Create Delta Sabia beamline model.
 
         Args:
@@ -1050,18 +1156,22 @@ class DeltaSabia(Delta):
             name (str, optional): Insertion device name.
                 Defaults to 'delta_sabia'.
         """
-
         if block_shape == 'default':
-            block_shape = _blocks.Block.get_predefined_shape(
-                'delta_sabia')
+            block_shape = _blocks.Block.get_predefined_shape('delta_sabia')
 
         if block_subdivision == 'default':
             block_subdivision = _blocks.Block.get_predefined_subdivision(
-                'delta_sabia')
+                'delta_sabia'
+            )
 
-        block_len = period_length/4 - longitudinal_distance
+        block_len = period_length / 4 - longitudinal_distance
         lenghts = [
-            block_len/4, block_len/4, 3*block_len/4, 3*block_len/4, block_len]
+            block_len / 4,
+            block_len / 4,
+            3 * block_len / 4,
+            3 * block_len / 4,
+            block_len,
+        ]
         distances = [8.4, 2, 3.3, 1, longitudinal_distance]
 
         if start_blocks_length == 'default':
@@ -1077,8 +1187,11 @@ class DeltaSabia(Delta):
             end_blocks_distance = distances[0:-1][::-1]
 
         super().__init__(
-            nr_periods=nr_periods, period_length=period_length,
-            gap=gap, mr=mr, block_shape=block_shape,
+            nr_periods=nr_periods,
+            period_length=period_length,
+            gap=gap,
+            mr=mr,
+            block_shape=block_shape,
             block_subdivision=block_subdivision,
             rectangular=rectangular,
             longitudinal_distance=longitudinal_distance,
@@ -1086,21 +1199,31 @@ class DeltaSabia(Delta):
             start_blocks_distance=start_blocks_distance,
             end_blocks_length=end_blocks_length,
             end_blocks_distance=end_blocks_distance,
-            name=name, **kwargs)
+            name=name,
+            **kwargs,
+        )
 
 
 class DeltaCarnauba(Delta):
     """Delta Carnauba."""
 
     def __init__(
-            self,
-            block_shape='default', nr_periods=52,
-            period_length=22, gap=7, mr=1.37,
-            block_subdivision='default',
-            rectangular=False, longitudinal_distance=0.05,
-            start_blocks_length='default', start_blocks_distance='default',
-            end_blocks_length='default', end_blocks_distance='default',
-            name='delta_carnauba', **kwargs):
+        self,
+        block_shape='default',
+        nr_periods=52,
+        period_length=22,
+        gap=7,
+        mr=1.37,
+        block_subdivision='default',
+        rectangular=False,
+        longitudinal_distance=0.05,
+        start_blocks_length='default',
+        start_blocks_distance='default',
+        end_blocks_length='default',
+        end_blocks_distance='default',
+        name='delta_carnauba',
+        **kwargs,
+    ):
         """Create Delta Carnauba beamline model.
 
         Args:
@@ -1134,19 +1257,19 @@ class DeltaCarnauba(Delta):
             name (str, optional): Insertion device name.
                 Defaults to 'delta_carnauba'.
         """
-
         if block_shape == 'default':
-            block_shape = _blocks.Block.get_predefined_shape(
-                'delta_carnauba')
+            block_shape = _blocks.Block.get_predefined_shape('delta_carnauba')
 
         if block_subdivision == 'default':
             block_subdivision = _blocks.Block.get_predefined_subdivision(
-                'delta_carnauba')
+                'delta_carnauba'
+            )
 
-        block_len = period_length/4 - longitudinal_distance
-        tlen = _np.round(block_len/4, decimals=2)
+        block_len = period_length / 4 - longitudinal_distance
+        tlen = _np.round(block_len / 4, decimals=2)
         lenghts = _np.round(
-            [tlen, tlen, 3*tlen, 3*tlen, block_len], decimals=2).tolist()
+            [tlen, tlen, 3 * tlen, 3 * tlen, block_len], decimals=2
+        ).tolist()
         distances = [2.9, 1.5, 1.8, 0.4, longitudinal_distance]
 
         if start_blocks_length == 'default':
@@ -1162,8 +1285,11 @@ class DeltaCarnauba(Delta):
             end_blocks_distance = distances[0:-1][::-1]
 
         super().__init__(
-            nr_periods=nr_periods, period_length=period_length,
-            gap=gap, mr=mr, block_shape=block_shape,
+            nr_periods=nr_periods,
+            period_length=period_length,
+            gap=gap,
+            mr=mr,
+            block_shape=block_shape,
             block_subdivision=block_subdivision,
             rectangular=rectangular,
             longitudinal_distance=longitudinal_distance,
@@ -1171,21 +1297,31 @@ class DeltaCarnauba(Delta):
             start_blocks_distance=start_blocks_distance,
             end_blocks_length=end_blocks_length,
             end_blocks_distance=end_blocks_distance,
-            name=name, **kwargs)
+            name=name,
+            **kwargs,
+        )
 
 
 class AppleXSabia(AppleX):
     """AppleX for Sirius Sabia beamline."""
 
     def __init__(
-            self,
-            block_shape='default', nr_periods=21,
-            period_length=52.5, gap=13.6, mr=1.39,
-            block_subdivision='default',
-            rectangular=False, longitudinal_distance=0.125,
-            start_blocks_length='default', start_blocks_distance='default',
-            end_blocks_length='default', end_blocks_distance='default',
-            name='applex_sabia', **kwargs):
+        self,
+        block_shape='default',
+        nr_periods=21,
+        period_length=52.5,
+        gap=13.6,
+        mr=1.39,
+        block_subdivision='default',
+        rectangular=False,
+        longitudinal_distance=0.125,
+        start_blocks_length='default',
+        start_blocks_distance='default',
+        end_blocks_length='default',
+        end_blocks_distance='default',
+        name='applex_sabia',
+        **kwargs,
+    ):
         """Create AppleX Sabia beamline model.
 
         Args:
@@ -1219,18 +1355,22 @@ class AppleXSabia(AppleX):
             name (str, optional): Insertion device name.
                 Defaults to 'applex_sabia'.
         """
-
         if block_shape == 'default':
-            block_shape = _blocks.Block.get_predefined_shape(
-                'delta_sabia')
+            block_shape = _blocks.Block.get_predefined_shape('delta_sabia')
 
         if block_subdivision == 'default':
             block_subdivision = _blocks.Block.get_predefined_subdivision(
-                'delta_sabia')
+                'delta_sabia'
+            )
 
-        block_len = period_length/4 - longitudinal_distance
+        block_len = period_length / 4 - longitudinal_distance
         lenghts = [
-            block_len/4, block_len/4, 3*block_len/4, 3*block_len/4, block_len]
+            block_len / 4,
+            block_len / 4,
+            3 * block_len / 4,
+            3 * block_len / 4,
+            block_len,
+        ]
         distances = [8.7, 2, 3.3, 1, longitudinal_distance]
 
         if start_blocks_length == 'default':
@@ -1246,8 +1386,11 @@ class AppleXSabia(AppleX):
             end_blocks_distance = distances[0:-1][::-1]
 
         super().__init__(
-            nr_periods=nr_periods, period_length=period_length,
-            gap=gap, mr=mr, block_shape=block_shape,
+            nr_periods=nr_periods,
+            period_length=period_length,
+            gap=gap,
+            mr=mr,
+            block_shape=block_shape,
             block_subdivision=block_subdivision,
             rectangular=rectangular,
             longitudinal_distance=longitudinal_distance,
@@ -1255,21 +1398,31 @@ class AppleXSabia(AppleX):
             start_blocks_distance=start_blocks_distance,
             end_blocks_length=end_blocks_length,
             end_blocks_distance=end_blocks_distance,
-            name=name, **kwargs)
+            name=name,
+            **kwargs,
+        )
 
 
 class AppleXCarnauba(AppleX):
     """AppleX Carnauba."""
 
     def __init__(
-            self,
-            block_shape='default', nr_periods=53,
-            period_length=22, gap=7, mr=1.39,
-            block_subdivision='default',
-            rectangular=False, longitudinal_distance=0.1,
-            start_blocks_length='default', start_blocks_distance='default',
-            end_blocks_length='default', end_blocks_distance='default',
-            name='applex_carnauba', **kwargs):
+        self,
+        block_shape='default',
+        nr_periods=53,
+        period_length=22,
+        gap=7,
+        mr=1.39,
+        block_subdivision='default',
+        rectangular=False,
+        longitudinal_distance=0.1,
+        start_blocks_length='default',
+        start_blocks_distance='default',
+        end_blocks_length='default',
+        end_blocks_distance='default',
+        name='applex_carnauba',
+        **kwargs,
+    ):
         """Create AppleX Carnauba beamline model.
 
         Args:
@@ -1303,18 +1456,22 @@ class AppleXCarnauba(AppleX):
             name (str, optional): Insertion device name.
                 Defaults to 'applex_carnauba'.
         """
-
         if block_shape == 'default':
-            block_shape = _blocks.Block.get_predefined_shape(
-                'delta_carnauba')
+            block_shape = _blocks.Block.get_predefined_shape('delta_carnauba')
 
         if block_subdivision == 'default':
             block_subdivision = _blocks.Block.get_predefined_subdivision(
-                'delta_carnauba')
+                'delta_carnauba'
+            )
 
-        block_len = period_length/4 - longitudinal_distance
+        block_len = period_length / 4 - longitudinal_distance
         lenghts = [
-            block_len/4, block_len/4, 3*block_len/4, 3*block_len/4, block_len]
+            block_len / 4,
+            block_len / 4,
+            3 * block_len / 4,
+            3 * block_len / 4,
+            block_len,
+        ]
         distances = [3.64, 0.84, 1.38, 0.42, longitudinal_distance]
 
         if start_blocks_length == 'default':
@@ -1330,8 +1487,11 @@ class AppleXCarnauba(AppleX):
             end_blocks_distance = distances[0:-1][::-1]
 
         super().__init__(
-            nr_periods=nr_periods, period_length=period_length,
-            gap=gap, mr=mr, block_shape=block_shape,
+            nr_periods=nr_periods,
+            period_length=period_length,
+            gap=gap,
+            mr=mr,
+            block_shape=block_shape,
             block_subdivision=block_subdivision,
             rectangular=rectangular,
             longitudinal_distance=longitudinal_distance,
@@ -1339,20 +1499,31 @@ class AppleXCarnauba(AppleX):
             start_blocks_distance=start_blocks_distance,
             end_blocks_length=end_blocks_length,
             end_blocks_distance=end_blocks_distance,
-            name=name, **kwargs)
+            name=name,
+            **kwargs,
+        )
 
 
 class AppleIISabia(AppleII):
     """AppleII with same parameters as DeltaSabia."""
 
     def __init__(
-            self, block_shape='default',
-            nr_periods=21, period_length=52.5, gap=8, mr=1.32,
-            block_subdivision='default',
-            rectangular=True, longitudinal_distance=0.125,
-            start_blocks_length='default', start_blocks_distance='default',
-            end_blocks_length='default', end_blocks_distance='default',
-            name='apple_sabia', **kwargs):
+        self,
+        block_shape='default',
+        nr_periods=21,
+        period_length=52.5,
+        gap=8,
+        mr=1.32,
+        block_subdivision='default',
+        rectangular=True,
+        longitudinal_distance=0.125,
+        start_blocks_length='default',
+        start_blocks_distance='default',
+        end_blocks_length='default',
+        end_blocks_distance='default',
+        name='apple_sabia',
+        **kwargs,
+    ):
         """Create AppleII with same parameters as DeltaSabia model.
 
         Args:
@@ -1386,18 +1557,17 @@ class AppleIISabia(AppleII):
             name (str, optional): Insertion device name.
                 Defaults to 'apple_sabia'.
         """
-
         if block_shape == 'default':
-            block_shape = _blocks.Block.get_predefined_shape(
-                'apple_sabia')
+            block_shape = _blocks.Block.get_predefined_shape('apple_sabia')
 
         if block_subdivision == 'default':
             block_subdivision = _blocks.Block.get_predefined_subdivision(
-                'apple_sabia')
+                'apple_sabia'
+            )
 
-        block_len = period_length/4 - longitudinal_distance
-        lenghts = [block_len/4, block_len/2, 3*block_len/4, block_len]
-        distances = [block_len/2, block_len/4, 0, longitudinal_distance]
+        block_len = period_length / 4 - longitudinal_distance
+        lenghts = [block_len / 4, block_len / 2, 3 * block_len / 4, block_len]
+        distances = [block_len / 2, block_len / 4, 0, longitudinal_distance]
 
         if start_blocks_length == 'default':
             start_blocks_length = lenghts
@@ -1412,8 +1582,11 @@ class AppleIISabia(AppleII):
             end_blocks_distance = distances[::-1]
 
         super().__init__(
-            nr_periods=nr_periods, period_length=period_length,
-            gap=gap, mr=mr, block_shape=block_shape,
+            nr_periods=nr_periods,
+            period_length=period_length,
+            gap=gap,
+            mr=mr,
+            block_shape=block_shape,
             block_subdivision=block_subdivision,
             rectangular=rectangular,
             longitudinal_distance=longitudinal_distance,
@@ -1421,21 +1594,31 @@ class AppleIISabia(AppleII):
             start_blocks_distance=start_blocks_distance,
             end_blocks_length=end_blocks_length,
             end_blocks_distance=end_blocks_distance,
-            name=name, **kwargs)
+            name=name,
+            **kwargs,
+        )
 
 
 class AppleIICarnauba(AppleII):
     """AppleII with same parameters as DeltaCarnauba."""
 
     def __init__(
-            self,
-            block_shape='default', nr_periods=53,
-            period_length=22, gap=7, mr=1.39,
-            block_subdivision='default',
-            rectangular=False, longitudinal_distance=0.1,
-            start_blocks_length='default', start_blocks_distance='default',
-            end_blocks_length='default', end_blocks_distance='default',
-            name='apple_carnauba', **kwargs):
+        self,
+        block_shape='default',
+        nr_periods=53,
+        period_length=22,
+        gap=7,
+        mr=1.39,
+        block_subdivision='default',
+        rectangular=False,
+        longitudinal_distance=0.1,
+        start_blocks_length='default',
+        start_blocks_distance='default',
+        end_blocks_length='default',
+        end_blocks_distance='default',
+        name='apple_carnauba',
+        **kwargs,
+    ):
         """Create AppleII with same parameters as DeltaCarnauba.
 
         Args:
@@ -1469,18 +1652,17 @@ class AppleIICarnauba(AppleII):
             name (str, optional): Insertion device name.
                 Defaults to 'apple_carnauba'.
         """
-
         if block_shape == 'default':
-            block_shape = _blocks.Block.get_predefined_shape(
-                'apple_carnauba')
+            block_shape = _blocks.Block.get_predefined_shape('apple_carnauba')
 
         if block_subdivision == 'default':
             block_subdivision = _blocks.Block.get_predefined_subdivision(
-                'apple_carnauba')
+                'apple_carnauba'
+            )
 
-        block_len = period_length/4 - longitudinal_distance
-        lenghts = [block_len/4, block_len/2, 3*block_len/4, block_len]
-        distances = [block_len/2, block_len/4, 0, longitudinal_distance]
+        block_len = period_length / 4 - longitudinal_distance
+        lenghts = [block_len / 4, block_len / 2, 3 * block_len / 4, block_len]
+        distances = [block_len / 2, block_len / 4, 0, longitudinal_distance]
 
         if start_blocks_length == 'default':
             start_blocks_length = lenghts
@@ -1495,8 +1677,11 @@ class AppleIICarnauba(AppleII):
             end_blocks_distance = distances[::-1]
 
         super().__init__(
-            nr_periods=nr_periods, period_length=period_length,
-            gap=gap, mr=mr, block_shape=block_shape,
+            nr_periods=nr_periods,
+            period_length=period_length,
+            gap=gap,
+            mr=mr,
+            block_shape=block_shape,
             block_subdivision=block_subdivision,
             rectangular=rectangular,
             longitudinal_distance=longitudinal_distance,
@@ -1504,20 +1689,31 @@ class AppleIICarnauba(AppleII):
             start_blocks_distance=start_blocks_distance,
             end_blocks_length=end_blocks_length,
             end_blocks_distance=end_blocks_distance,
-            name=name, **kwargs)
+            name=name,
+            **kwargs,
+        )
 
 
 class Kyma22(APU):
     """Kyma commissioning undulador."""
 
     def __init__(
-            self, block_shape='default',
-            nr_periods=51, period_length=22, gap=8, mr=1.32,
-            block_subdivision='default',
-            rectangular=False, longitudinal_distance=0.1,
-            start_blocks_length='default', start_blocks_distance='default',
-            end_blocks_length='default', end_blocks_distance='default',
-            name='kyma_22', **kwargs):
+        self,
+        block_shape='default',
+        nr_periods=51,
+        period_length=22,
+        gap=8,
+        mr=1.32,
+        block_subdivision='default',
+        rectangular=False,
+        longitudinal_distance=0.1,
+        start_blocks_length='default',
+        start_blocks_distance='default',
+        end_blocks_length='default',
+        end_blocks_distance='default',
+        name='kyma_22',
+        **kwargs,
+    ):
         """Create Kyma22 model.
 
         Args:
@@ -1551,22 +1747,29 @@ class Kyma22(APU):
             name (str, optional): Insertion device name.
                 Defaults to 'kyma_22'.
         """
-
         if block_shape == 'default':
-            block_shape = _blocks.Block.get_predefined_shape(
-                'kyma_22')
+            block_shape = _blocks.Block.get_predefined_shape('kyma_22')
 
         if block_subdivision == 'default':
             block_subdivision = _blocks.Block.get_predefined_subdivision(
-                'kyma_22')
+                'kyma_22'
+            )
 
-        block_len = period_length/4 - longitudinal_distance
+        block_len = period_length / 4 - longitudinal_distance
         lenghts = [
-            block_len/2, block_len, block_len/2,
-            block_len, block_len]
+            block_len / 2,
+            block_len,
+            block_len / 2,
+            block_len,
+            block_len,
+        ]
         distances = [
-            block_len/4, block_len/4, block_len/4,
-            longitudinal_distance, longitudinal_distance]
+            block_len / 4,
+            block_len / 4,
+            block_len / 4,
+            longitudinal_distance,
+            longitudinal_distance,
+        ]
 
         if start_blocks_length == 'default':
             start_blocks_length = lenghts
@@ -1581,8 +1784,11 @@ class Kyma22(APU):
             end_blocks_distance = distances[0:-1][::-1]
 
         super().__init__(
-            nr_periods=nr_periods, period_length=period_length,
-            gap=gap, mr=mr, block_shape=block_shape,
+            nr_periods=nr_periods,
+            period_length=period_length,
+            gap=gap,
+            mr=mr,
+            block_shape=block_shape,
             block_subdivision=block_subdivision,
             rectangular=rectangular,
             longitudinal_distance=longitudinal_distance,
@@ -1590,20 +1796,31 @@ class Kyma22(APU):
             start_blocks_distance=start_blocks_distance,
             end_blocks_length=end_blocks_length,
             end_blocks_distance=end_blocks_distance,
-            name=name, **kwargs)
+            name=name,
+            **kwargs,
+        )
 
 
 class Kyma58(APU):
     """Kyma commissioning undulador."""
 
     def __init__(
-            self, block_shape='default',
-            nr_periods=18, period_length=58, gap=15.8, mr=1.32,
-            block_subdivision='default',
-            rectangular=False, longitudinal_distance=0.1,
-            start_blocks_length='default', start_blocks_distance='default',
-            end_blocks_length='default', end_blocks_distance='default',
-            name='kyma_58', **kwargs):
+        self,
+        block_shape='default',
+        nr_periods=18,
+        period_length=58,
+        gap=15.8,
+        mr=1.32,
+        block_subdivision='default',
+        rectangular=False,
+        longitudinal_distance=0.1,
+        start_blocks_length='default',
+        start_blocks_distance='default',
+        end_blocks_length='default',
+        end_blocks_distance='default',
+        name='kyma_58',
+        **kwargs,
+    ):
         """Create Kyma58 model.
 
         Args:
@@ -1637,22 +1854,29 @@ class Kyma58(APU):
             name (str, optional): Insertion device name.
                 Defaults to 'kyma_58'.
         """
-
         if block_shape == 'default':
-            block_shape = _blocks.Block.get_predefined_shape(
-                'kyma_58')
+            block_shape = _blocks.Block.get_predefined_shape('kyma_58')
 
         if block_subdivision == 'default':
             block_subdivision = _blocks.Block.get_predefined_subdivision(
-                'kyma_58')
+                'kyma_58'
+            )
 
-        block_len = period_length/4 - longitudinal_distance
+        block_len = period_length / 4 - longitudinal_distance
         lenghts = [
-            block_len/2, block_len, block_len/2,
-            block_len, block_len]
+            block_len / 2,
+            block_len,
+            block_len / 2,
+            block_len,
+            block_len,
+        ]
         distances = [
-            block_len/4, block_len/4, block_len/4,
-            longitudinal_distance, longitudinal_distance]
+            block_len / 4,
+            block_len / 4,
+            block_len / 4,
+            longitudinal_distance,
+            longitudinal_distance,
+        ]
 
         if start_blocks_length == 'default':
             start_blocks_length = lenghts
@@ -1667,8 +1891,11 @@ class Kyma58(APU):
             end_blocks_distance = distances[0:-1][::-1]
 
         super().__init__(
-            nr_periods=nr_periods, period_length=period_length,
-            gap=gap, mr=mr, block_shape=block_shape,
+            nr_periods=nr_periods,
+            period_length=period_length,
+            gap=gap,
+            mr=mr,
+            block_shape=block_shape,
             block_subdivision=block_subdivision,
             rectangular=rectangular,
             longitudinal_distance=longitudinal_distance,
@@ -1676,21 +1903,131 @@ class Kyma58(APU):
             start_blocks_distance=start_blocks_distance,
             end_blocks_length=end_blocks_length,
             end_blocks_distance=end_blocks_distance,
-            name=name, **kwargs)
+            name=name,
+            **kwargs,
+        )
+
+
+class UE44(AppleII):
+    def __init__(
+        self,
+        block_shape='default',
+        nr_periods=75,
+        period_length=44,
+        gap=11.4,
+        mr=1.14,
+        block_subdivision='default',
+        rectangular=True,
+        longitudinal_distance=0,
+        name='ue44',
+        **kwargs,
+    ):
+
+        if block_shape == 'default':
+            block_shape = _blocks.Block.get_predefined_shape('ue44')
+
+        l1 = 1.44671233
+        l2 = 4.55528286
+        l3 = 6.93386859
+
+        start_blocks_length = [l1, l2, l3, 11]
+        start_blocks_distance = [4, 4, 4, 0]
+
+        end_blocks_length = [11, 11, l3, l2, l1]
+        end_blocks_distance = [0, 0, 4, 4, 4]
+
+        super().__init__(
+            block_shape=block_shape,
+            nr_periods=nr_periods,
+            period_length=period_length,
+            gap=gap,
+            mr=mr,
+            longitudinal_distance=longitudinal_distance,
+            start_blocks_distance=start_blocks_distance,
+            start_blocks_length=start_blocks_length,
+            end_blocks_distance=end_blocks_distance,
+            end_blocks_length=end_blocks_length,
+        )
+
+        cse_mag = _np.array(self.magnetization_dict['cse'])
+        csd_mag = _np.array(self.magnetization_dict['csd'])
+        cse_mag *= -1
+        csd_mag *= -1
+
+        cie_mag = _np.array(self.magnetization_dict['cie'])
+        cid_mag = _np.array(self.magnetization_dict['cid'])
+        cie_mag *= -1
+        cid_mag *= -1
+
+        mag_dict = dict()
+        mag_dict['cse'] = cse_mag.tolist()
+        mag_dict['csd'] = csd_mag.tolist()
+        mag_dict['cie'] = cie_mag.tolist()
+        mag_dict['cid'] = cid_mag.tolist()
+
+        self.create_radia_object(magnetization_dict=mag_dict)
+
+    def move_cassettes(self, phase=0, rho=0):
+        csd = self.cassettes_ref['csd']
+        cse = self.cassettes_ref['cse']
+        cid = self.cassettes_ref['cid']
+        cie = self.cassettes_ref['cie']
+
+        csd_z0 = csd.center_point[2]
+        cse_z0 = cse.center_point[2]
+        cid_z0 = cid.center_point[2]
+        cie_z0 = cie.center_point[2]
+
+        diff_csd = -csd_z0 + phase
+        diff_cse = -cse_z0 + rho
+        diff_cie = -cie_z0 + phase + rho
+
+        csd.shift([0, 0, diff_csd])
+        cse.shift([0, 0, diff_cse])
+        cie.shift([0, 0, diff_cie])
+        cid.shift([0, 0, 0])
+
+    def move_cassettes_linear(self, phase=0, rho=0):
+        csd = self.cassettes_ref['csd']
+        cse = self.cassettes_ref['cse']
+        cid = self.cassettes_ref['cid']
+        cie = self.cassettes_ref['cie']
+
+        csd_z0 = csd.center_point[2]
+        cse_z0 = cse.center_point[2]
+        cid_z0 = cid.center_point[2]
+        cie_z0 = cie.center_point[2]
+
+        diff_csd = -csd_z0 - phase
+        diff_cse = -cse_z0 + rho
+        diff_cie = -cie_z0 + phase + rho
+
+        csd.shift([0, 0, diff_csd])
+        cse.shift([0, 0, diff_cse])
+        cie.shift([0, 0, diff_cie])
+        cid.shift([0, 0, 0])
 
 
 class PAPU(APU):
     """Prototype Adjustable Phase Undulador model."""
 
     def __init__(
-            self, block_shape='default',
-            nr_periods=18, period_length=50.0, gap=24.0, mr=1.22,
-            block_subdivision='default',
-            rectangular=False, longitudinal_distance=0.2,
-            start_blocks_length='default', start_blocks_distance='default',
-            end_blocks_length='default', end_blocks_distance='default',
-            name='PAPU', **kwargs):
-
+        self,
+        block_shape='default',
+        nr_periods=18,
+        period_length=50.0,
+        gap=24.0,
+        mr=1.22,
+        block_subdivision='default',
+        rectangular=False,
+        longitudinal_distance=0.2,
+        start_blocks_length='default',
+        start_blocks_distance='default',
+        end_blocks_length='default',
+        end_blocks_distance='default',
+        name='PAPU',
+        **kwargs,
+    ):
         """Create PAPU model.
 
         Args:
@@ -1724,18 +2061,25 @@ class PAPU(APU):
             name (str, optional): Insertion device name.
                 Defaults to 'PAPU'.
         """
-
         if block_shape == 'default':
             block_shape = _blocks.Block.get_predefined_shape('papu')
             block_shape_flip = _blocks.Block.get_predefined_shape('papu_flip')
 
         if block_subdivision == 'default':
             block_subdivision = _blocks.Block.get_predefined_subdivision(
-                                                                        'papu')
+                'papu'
+            )
 
-        block_len = period_length/4 - longitudinal_distance
-        lenghts = [block_len/4, block_len/4, block_len/4,
-                   block_len/4, block_len/4, block_len/4, block_len]
+        block_len = period_length / 4 - longitudinal_distance
+        lenghts = [
+            block_len / 4,
+            block_len / 4,
+            block_len / 4,
+            block_len / 4,
+            block_len / 4,
+            block_len / 4,
+            block_len,
+        ]
         distances = [6, 0, 2.4, 1, 0, 0.2, 0.2]
 
         if start_blocks_length == 'default':
@@ -1751,8 +2095,11 @@ class PAPU(APU):
             end_blocks_distance = distances[0:-1][::-1]
 
         super().__init__(
-            cs_block_shape=block_shape_flip, ci_block_shape=block_shape,
-            mr=mr, gap=gap, nr_periods=nr_periods,
+            cs_block_shape=block_shape_flip,
+            ci_block_shape=block_shape,
+            mr=mr,
+            gap=gap,
+            nr_periods=nr_periods,
             period_length=period_length,
             block_subdivision=block_subdivision,
             rectangular=rectangular,
@@ -1761,28 +2108,42 @@ class PAPU(APU):
             start_blocks_distance=start_blocks_distance,
             end_blocks_length=end_blocks_length,
             end_blocks_distance=end_blocks_distance,
-            name=name, **kwargs)
+            name=name,
+            **kwargs,
+        )
 
         magnetizations = _np.array(
-              [[0,mr,0],
-               [0,0,-mr], [0,0,-mr],
-               [0,-mr,0], [0,-mr,0], [0,-mr,0],
-               [0,0,mr]]
-            + nr_periods*[[0,mr,0], [0,0,-mr],
-                          [0,-mr,0], [0,0,mr]]
-            + [[0,mr,0], [0,mr,0], [0,mr,0],
-               [0,0,-mr], [0,0,-mr],
-               [0,-mr,0]])
+            [
+                [0, mr, 0],
+                [0, 0, -mr],
+                [0, 0, -mr],
+                [0, -mr, 0],
+                [0, -mr, 0],
+                [0, -mr, 0],
+                [0, 0, mr],
+            ]
+            + nr_periods * [[0, mr, 0], [0, 0, -mr], [0, -mr, 0], [0, 0, mr]]
+            + [
+                [0, mr, 0],
+                [0, mr, 0],
+                [0, mr, 0],
+                [0, 0, -mr],
+                [0, 0, -mr],
+                [0, -mr, 0],
+            ]
+        )
         # In the APU implementation, the superior cassette is the one
         # created by rotation of the inferior cassette around (0,0,1).
-        magnetization_dict = {'cs': -1*magnetizations, 'ci': magnetizations}
+        magnetization_dict = {'cs': -1 * magnetizations, 'ci': magnetizations}
 
-        block_names = {'cs':[f'block_{n:02d}' for n in range(4*nr_periods+13)],
-                       'ci':[f'block_{n:02d}' for n in range(4*nr_periods+13)]}
+        block_names = {
+            'cs': [f'block_{n:02d}' for n in range(4 * nr_periods + 13)],
+            'ci': [f'block_{n:02d}' for n in range(4 * nr_periods + 13)],
+        }
 
         self.create_radia_object(
-                    magnetization_dict=magnetization_dict,
-                    block_names_dict=block_names)
+            magnetization_dict=magnetization_dict, block_names_dict=block_names
+        )
 
         self.shift([-1.7, 0, 0])
 
@@ -1791,15 +2152,27 @@ class HybridAPU(APU):
     """Hybrid APU undulador."""
 
     def __init__(
-            self, block_shape='default',
-            nr_periods=10, period_length=19.9, gap=5.2, mr=1.34,
-            block_subdivision='default', hybrid=True,
-            pole_shape='default', pole_length='default',
-            pole_material='default', pole_subdivision='default',
-            rectangular=False, longitudinal_distance=0.1,
-            start_blocks_length='default', start_blocks_distance='default',
-            end_blocks_length='default', end_blocks_distance='default',
-            name='hybrid_planar', **kwargs):
+        self,
+        block_shape='default',
+        nr_periods=10,
+        period_length=19.9,
+        gap=5.2,
+        mr=1.34,
+        block_subdivision='default',
+        hybrid=True,
+        pole_shape='default',
+        pole_length='default',
+        pole_material='default',
+        pole_subdivision='default',
+        rectangular=False,
+        longitudinal_distance=0.1,
+        start_blocks_length='default',
+        start_blocks_distance='default',
+        end_blocks_length='default',
+        end_blocks_distance='default',
+        name='hybrid_planar',
+        **kwargs,
+    ):
         """Create Hybrid APU model.
 
         Args:
@@ -1844,35 +2217,35 @@ class HybridAPU(APU):
             name (str, optional): Insertion device name.
                 Defaults to 'hybrid_planar'.
         """
-
         if block_shape == 'default':
-            block_shape = _blocks.Block.get_predefined_shape(
-                'hybrid_block')
+            block_shape = _blocks.Block.get_predefined_shape('hybrid_block')
 
         if block_subdivision == 'default':
             block_subdivision = _blocks.Block.get_predefined_subdivision(
-                'hybrid_block')
+                'hybrid_block'
+            )
 
         if pole_shape == 'default':
-            pole_shape = _blocks.Block.get_predefined_shape(
-                'hybrid_pole')
+            pole_shape = _blocks.Block.get_predefined_shape('hybrid_pole')
 
         if pole_subdivision == 'default':
             pole_subdivision = _blocks.Block.get_predefined_subdivision(
-                'hybrid_pole')
+                'hybrid_pole'
+            )
 
         if pole_material == 'default':
             pole_material = _materials.Material.preset(
-                'VanadiumPermendur').name
+                'VanadiumPermendur'
+            ).name
 
         if pole_length == 'default':
             pole_length = _utils.hybrid_undulator_pole_length(
-                gap, period_length)
+                gap, period_length
+            )
 
-        block_len = (
-            period_length/2 - pole_length - 2*longitudinal_distance)
+        block_len = period_length / 2 - pole_length - 2 * longitudinal_distance
 
-        lenghts = [block_len/2, pole_length/2, block_len]
+        lenghts = [block_len / 2, pole_length / 2, block_len]
         distances = [pole_length, pole_length, longitudinal_distance]
 
         if start_blocks_length == 'default':
@@ -1888,8 +2261,11 @@ class HybridAPU(APU):
             end_blocks_distance = distances[0:-1][::-1]
 
         super().__init__(
-            nr_periods=nr_periods, period_length=period_length,
-            gap=gap, mr=mr, block_shape=block_shape,
+            nr_periods=nr_periods,
+            period_length=period_length,
+            gap=gap,
+            mr=mr,
+            block_shape=block_shape,
             block_subdivision=block_subdivision,
             rectangular=rectangular,
             longitudinal_distance=longitudinal_distance,
@@ -1902,23 +2278,37 @@ class HybridAPU(APU):
             start_blocks_distance=start_blocks_distance,
             end_blocks_length=end_blocks_length,
             end_blocks_distance=end_blocks_distance,
-            name=name, **kwargs)
+            name=name,
+            **kwargs,
+        )
 
 
 class HybridPlanar(Planar):
     """Hybrid planar undulador."""
 
     def __init__(
-            self, block_shape='default',
-            nr_periods=10, period_length=19.9, gap=5.2, mr=1.34,
-            block_material='default',
-            block_subdivision='default', hybrid=True,
-            pole_shape='default', pole_length='default',
-            pole_material='default', pole_subdivision='default',
-            rectangular=False, longitudinal_distance=0.1,
-            start_blocks_length='default', start_blocks_distance='default',
-            end_blocks_length='default', end_blocks_distance='default',
-            name='hybrid_planar', **kwargs):
+        self,
+        block_shape='default',
+        nr_periods=10,
+        period_length=19.9,
+        gap=5.2,
+        mr=1.34,
+        block_material='default',
+        block_subdivision='default',
+        hybrid=True,
+        pole_shape='default',
+        pole_length='default',
+        pole_material='default',
+        pole_subdivision='default',
+        rectangular=False,
+        longitudinal_distance=0.1,
+        start_blocks_length='default',
+        start_blocks_distance='default',
+        end_blocks_length='default',
+        end_blocks_distance='default',
+        name='hybrid_planar',
+        **kwargs,
+    ):
         """Create Hybrid planar model.
 
         Args:
@@ -1963,39 +2353,38 @@ class HybridPlanar(Planar):
             name (str, optional): Insertion device name.
                 Defaults to 'hybrid_planar'.
         """
-
         if block_shape == 'default':
-            block_shape = _blocks.Block.get_predefined_shape(
-                'hybrid_block')
+            block_shape = _blocks.Block.get_predefined_shape('hybrid_block')
 
         if block_subdivision == 'default':
             block_subdivision = _blocks.Block.get_predefined_subdivision(
-                'hybrid_block')
+                'hybrid_block'
+            )
 
         if pole_shape == 'default':
-            pole_shape = _blocks.Block.get_predefined_shape(
-                'hybrid_pole')
+            pole_shape = _blocks.Block.get_predefined_shape('hybrid_pole')
 
         if pole_subdivision == 'default':
             pole_subdivision = _blocks.Block.get_predefined_subdivision(
-                'hybrid_pole')
+                'hybrid_pole'
+            )
 
         if pole_material == 'default':
             pole_material = _materials.Material.preset(
-                'VanadiumPermendur').name
+                'VanadiumPermendur'
+            ).name
 
         if block_material == 'default':
-            block_material = _materials.Material.preset(
-                'NdFeB').name
+            block_material = _materials.Material.preset('NdFeB').name
 
         if pole_length == 'default':
             pole_length = _utils.hybrid_undulator_pole_length(
-                gap, period_length)
+                gap, period_length
+            )
 
-        block_len = (
-            period_length/2 - pole_length - 2*longitudinal_distance)
+        block_len = period_length / 2 - pole_length - 2 * longitudinal_distance
 
-        lenghts = [block_len/2, pole_length/2, block_len]
+        lenghts = [block_len / 2, pole_length / 2, block_len]
         distances = [pole_length, pole_length, longitudinal_distance]
 
         if start_blocks_length == 'default':
@@ -2011,8 +2400,11 @@ class HybridPlanar(Planar):
             end_blocks_distance = distances[0:-1][::-1]
 
         super().__init__(
-            nr_periods=nr_periods, period_length=period_length,
-            gap=gap, mr=mr, block_shape=block_shape,
+            nr_periods=nr_periods,
+            period_length=period_length,
+            gap=gap,
+            mr=mr,
+            block_shape=block_shape,
             block_material=block_material,
             block_subdivision=block_subdivision,
             rectangular=rectangular,
@@ -2026,21 +2418,31 @@ class HybridPlanar(Planar):
             start_blocks_distance=start_blocks_distance,
             end_blocks_length=end_blocks_length,
             end_blocks_distance=end_blocks_distance,
-            name=name, **kwargs)
+            name=name,
+            **kwargs,
+        )
 
 
 class MiniPlanarSabia(Planar):
     """Planar undulator with the same blocks as Delta Sabia."""
 
     def __init__(
-            self,
-            block_shape='default', nr_periods=3,
-            period_length=52.5, gap=13.6, mr=1.39,
-            block_subdivision='default',
-            rectangular=False, longitudinal_distance=0.125,
-            start_blocks_length=None, start_blocks_distance=None,
-            end_blocks_length=None, end_blocks_distance=None,
-            name='mini_planar_sabia', **kwargs):
+        self,
+        block_shape='default',
+        nr_periods=3,
+        period_length=52.5,
+        gap=13.6,
+        mr=1.39,
+        block_subdivision='default',
+        rectangular=False,
+        longitudinal_distance=0.125,
+        start_blocks_length=None,
+        start_blocks_distance=None,
+        end_blocks_length=None,
+        end_blocks_distance=None,
+        name='mini_planar_sabia',
+        **kwargs,
+    ):
         """Create Mini planar with the same blocks as Delta Sabia model.
 
         Args:
@@ -2074,18 +2476,20 @@ class MiniPlanarSabia(Planar):
             name (str, optional): Insertion device name.
                 Defaults to 'mini_planar_sabia'.
         """
-
         if block_shape == 'default':
-            block_shape = _blocks.Block.get_predefined_shape(
-                'delta_sabia')
+            block_shape = _blocks.Block.get_predefined_shape('delta_sabia')
 
         if block_subdivision == 'default':
             block_subdivision = _blocks.Block.get_predefined_subdivision(
-                'delta_sabia')
+                'delta_sabia'
+            )
 
         super().__init__(
-            nr_periods=nr_periods, period_length=period_length,
-            gap=gap, mr=mr, block_shape=block_shape,
+            nr_periods=nr_periods,
+            period_length=period_length,
+            gap=gap,
+            mr=mr,
+            block_shape=block_shape,
             block_subdivision=block_subdivision,
             rectangular=rectangular,
             longitudinal_distance=longitudinal_distance,
@@ -2093,4 +2497,6 @@ class MiniPlanarSabia(Planar):
             start_blocks_distance=start_blocks_distance,
             end_blocks_length=end_blocks_length,
             end_blocks_distance=end_blocks_distance,
-            name=name, **kwargs)
+            name=name,
+            **kwargs,
+        )
