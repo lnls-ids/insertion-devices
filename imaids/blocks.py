@@ -1,6 +1,5 @@
 
 from copy import deepcopy as _deepcopy
-import json as _json
 import numpy as _np
 import radia as _rad
 
@@ -31,13 +30,13 @@ class Block(_fieldsource.FieldModel):
                 [21.5, -50], [22.5, -49], [22.5, -42.4], [17.8, -38.4]]],
         'apple_delta_sabia_flip': [
             [
-                [17.25,-50.0],[0.0,-30.7],[0.0,-20.8],[4.7,-16.8],[40.3,-16.8],
-                [45.0,-20.8],[45.0,-30.7],[27.75,-50.0]],
+                [17.25, -50.0], [0.0, -30.7], [0.0, -20.8], [4.7, -16.8], [40.3, -16.8],
+                [45.0, -20.8], [45.0, -30.7], [27.75, -50.0]],
             [
-                [4.7,-16.8],[4.7,-11.6],[40.3,-11.6],[40.3,-16.8]],
+                [4.7, -16.8], [4.7, -11.6], [40.3, -11.6], [40.3, -16.8]],
             [
-                [4.7,-11.6],[0.0,-7.6],[0.0,-1.0],[1.0,0.0],[44.0,0.0],
-                [45.0,-1.0],[45.0,-7.6],[40.3,-11.6]]],
+                [4.7, -11.6], [0.0, -7.6], [0.0, -1.0], [1.0, 0.0], [44.0, 0.0],
+                [45.0, -1.0], [45.0, -7.6], [40.3, -11.6]]],
         'delta_carnauba': [
             [
                 [-2.55, 0.0], [-11.25, -9.65], [-11.25, -14.6],
@@ -138,7 +137,7 @@ class Block(_fieldsource.FieldModel):
         'delta_carnauba_smooth': [
             [
                 [-2.55, 0.0], [-11.25, -9.65], [-11.25, -14.971264],
-                        [11.25, -14.971264],[11.25, -9.65], [2.55, 0.0]],
+                        [11.25, -14.971264], [11.25, -9.65], [2.55, 0.0]],
             [
                 [-10.026392921908503, -15.5570112],
                 [-11.25, -14.971264],
@@ -195,8 +194,20 @@ class Block(_fieldsource.FieldModel):
                 [-10.8964466, -25.0], [10.8964466, -25.0],
                 [11.25, -24.6464466],
                 [11.25, -20.828736]]],
-                }
+        'ue44': [
+            [[-30.235, -30],
+             [-5.235, -30],
+             [-5.235, -25],
+             [-25.235, -5],
+             [-30.235, -5],],
 
+             [[-5.235, -25],
+               [-0.235, -25],
+               [-0.235, 0],
+               [-25.235, 0],
+               [-25.235, -5],],
+            ],
+                }
 
     PREDEFINED_SUBDIVISION = {
         'delta_prototype': [[3, 3, 2], [3, 3, 2]],
@@ -207,7 +218,7 @@ class Block(_fieldsource.FieldModel):
         'apple_carnauba': [[3, 3, 3]],
         'kyma_22': [[6, 3, 3]],
         'kyma_58': [[6, 3, 3]],
-        'papu': [[3,3,2], [3,3,2]],
+        'papu': [[3, 3, 2], [3, 3, 2]],
         'hybrid_block': [[3, 3, 3]],
         'hybrid_pole': [[6, 6, 3]],
         'delta_sabia_smooth': [[3, 3, 2], [1, 1, 2],
@@ -217,7 +228,8 @@ class Block(_fieldsource.FieldModel):
         'delta_carnauba_smooth': [[3, 3, 2], [1, 1, 1],
                [1, 1, 1], [1, 1, 1], [1, 1, 1],
                [1, 1, 1], [1, 1, 1], [1, 1, 1],
-               [1, 1, 1], [1, 1, 1], [1, 1, 1], [2, 2, 2]]
+               [1, 1, 1], [1, 1, 1], [1, 1, 1], [2, 2, 2]],
+        'ue44': [[3, 3, 3], [3, 3, 3]],
     }
 
     def __init__(
@@ -327,7 +339,7 @@ class Block(_fieldsource.FieldModel):
             if not cylinder:
                 sub = [[1, 1, 1]]*len(self._shape)
             else:
-                sub = [[1,1,1]]
+                sub = [[1, 1, 1]]
         else:
             sub = subdivision
 
@@ -427,19 +439,19 @@ class Block(_fieldsource.FieldModel):
     def draw_color(self):
         """RGB color used for draw method."""
         if self.draw_color_component is None:
-            return [0.8, 0.9, 0.7] # standard color.
+            return [0.8, 0.9, 0.7]  # standard color.
         else:
             magnetization_array = _np.array(self._magnetization)
             component = magnetization_array[self.draw_color_component]
-            eps = 10*_np.finfo(_np.float64).eps # Very small number (10 times
+            eps = 10*_np.finfo(_np.float64).eps  # Very small number (10 times
                                                 # the smallest epsilon for a
                                                 # flaot) may mean 0.0.
             if component > eps:
-                return [0, 0.6, 0.7] # blue-ish.
+                return [0, 0.6, 0.7]  # blue-ish.
             elif component < -1*eps:
-                return [0.7, 0.2, 0.5] # pink-ish.
+                return [0.7, 0.2, 0.5]  # pink-ish.
             else:
-                return [0.8, 0.8, 0.8] # light gray.
+                return [0.8, 0.8, 0.8]  # light gray.
 
     @property
     def state(self):
@@ -555,15 +567,14 @@ class Block(_fieldsource.FieldModel):
                 where the min and max values are the coordinates' upper and
                 lower bounds for the points forming the block geometry.
         """
-
         if self.cylinder:
             bounding_box = [[-self.shape, self.shape],
                             [-0.5*self.length, 0.5*self.length],
                             [-self.shape, self.shape]]
         else:
             points = _np.concatenate(self.shape, axis=0)
-            x = points[:,0]
-            y = points[:,1]
+            x = points[:, 0]
+            y = points[:, 1]
             zmin = self.longitudinal_position - 0.5*self.length
             zmax = self.longitudinal_position + 0.5*self.length
             bounding_box = [[x.min(), x.max()],
